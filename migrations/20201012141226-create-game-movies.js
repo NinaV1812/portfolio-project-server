@@ -9,7 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       gameId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "games",
+          key: "id"
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
       movieId: {
         type: Sequelize.INTEGER

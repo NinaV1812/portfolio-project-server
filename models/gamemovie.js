@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      gameMovie.hasOne(models.game)
-      gameMovie.belongsTo(models.choice)
+      gameMovie.belongsTo(models.game)
+      gameMovie.hasMany(models.choice)
     }
   };
   gameMovie.init({

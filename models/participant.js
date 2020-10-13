@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      participant.hasMany(models.user)
-      participant.hasMany(models.game)
+      participant.belongsTo(models.user)
+      participant.belongsTo(models.game)
     }
   };
   participant.init({

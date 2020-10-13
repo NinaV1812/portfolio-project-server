@@ -10,22 +10,22 @@ module.exports = {
       },
       gameMovieId: {
         type: Sequelize.INTEGER,
-        // references: {
-        //   model: "gameMovie",
-        //   key: "id"
-        // },
-        // onUpdate: "CASCADE",
-        // onDelete: "CASCADE"
+        references: {
+          model: "gameMovies",
+          key: "id"
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
 
       userId: {
         type: Sequelize.INTEGER,
-      // references: {
-      //   model: "user",
-      //   key: "id"
-      // },
-      // onUpdate: "CASCADE",
-      // onDelete: "CASCADE"
+      references: {
+        model: "users",
+        key: "id"
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE"
     },
       picked: {
         type: Sequelize.BOOLEAN

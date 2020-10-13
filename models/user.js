@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      user.hasMany(models.game)
+      user.hasMany(models.choice)
       // user.hasOne(models.choice)
-      user.belongsTo(models.participant,{
-        through: "games",
+      user.belongsToMany(models.game,{
+        through: "partcipants",
         foreignKey: "userId"
       })
     }
