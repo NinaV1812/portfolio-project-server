@@ -20,7 +20,7 @@ module.exports = {
       movieId: {
         type: Sequelize.INTEGER
       },
-      details: {
+      overview: {
         type: Sequelize.STRING
       },
       createdAt: {

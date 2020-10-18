@@ -8,21 +8,21 @@ module.exports = {
         {
           gameId: 1,
           movieId:1,
-          details: "string",
+          overview: "string",
           createdAt: new Date(),
           updatedAt: new Date(),
       },
       {
         gameId: 1,
         movieId:2,
-        details: "string",
+        overview: "string",
         createdAt: new Date(),
           updatedAt: new Date(),
     },
     {
       gameId: 2,
       movieId:3,
-      details: "string",
+      overview: "string",
       createdAt: new Date(),
           updatedAt: new Date(),
     }
