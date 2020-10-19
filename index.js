@@ -7,6 +7,7 @@ const Game = require("./models").game;
 const GameMovie = require("./models").gameMovie;
 const User = require("./models").user;
 const Choice = require("./models").choice;
+const Participant = require("./models").participant;
 const bodyParser = require("body-parser");
 
 const router = express.Router();
@@ -75,23 +76,15 @@ app.post("/set_up_game", async (req, res, next) => {
 
   try {
     const { started } = req.body;
-    // console.log(response.data);
+    // console.log(req.body);
     const code = Math.floor(Math.random() * 10000);
-    // const started = true;
 
-    // *** Create a game ***
     const newGame = await Game.create({
       code: code,
       started: started,
     });
     console.log("new game", newGame);
-
-    // ** send them back to game creator with code **
-    //console.log("new game", newGame)
-    //res.send(response.data)
-    // res.status(200).send(newGame)
     res.status(200).send(newGame);
-    // ** save movies to gameMovie with new game id (get frst 10 or something)**
   } catch (e) {
     next(e);
   }
@@ -119,7 +112,58 @@ app.post("/movies_in_game", async (req, res, next) => {
     next(e);
   }
 });
-app.post("", async (req, res, next) => {});
+
+// Ask rian about title and separate migration
+
+app.post("/participant", async (req, res, next) => {
+  try {
+    const gameId = 5;
+    const userId = 3;
+
+    const newParticipant = await Participant.create({
+      gameId: gameId,
+      userId: userId,
+    });
+    res.status(200).send(newParticipant);
+  } catch (e) {
+    next(e);
+  }
+});
+
+app.post("/choice", async (req, res, next) => {
+  try {
+    const gameMovieId = 5;
+    const userId = 3;
+    const picked = true;
+
+    const newChoice = await Choice.create({
+      gameMovieId: gameMovieId,
+      userId: userId,
+      picked: picked,
+    });
+    res.status(200).send(newChoice);
+  } catch (e) {
+    next(e);
+  }
+});
+
+//ask rian about user and changing on this step
+app.post("/user", async (req, res, next) => {
+  try {
+    const name = "ololo";
+    const email = "ololo.com";
+    const password = 999;
+
+    const newUser = await User.create({
+      name: name,
+      email: email,
+      password: password,
+    });
+    res.status(200).send(newUser);
+  } catch (e) {
+    next(e);
+  }
+});
 
 app.listen(port, () => console.log("listening on port " + port));
 http.listen(3000, () => {
