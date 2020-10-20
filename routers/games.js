@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const axios = require("axios");
 const Game = require("../models").game;
 const Participant = require("../models").participant;
 const Choice = require("../models").choice;
@@ -10,7 +11,7 @@ const router = new Router();
 router.post("/:code", async (req, res, next) => {
   const code = req.params.code;
   //   const code = 8276;
-  const name = req.params.name;
+  const { name } = req.body;
 
   const game = await Game.findOne({
     where: { code: code },
@@ -41,13 +42,15 @@ router.patch("/:id", async (req, res, next) => {
   await gameToUpdate.update({ genres });
 
   const moviesResponse = await axios.get(`
-  https://api.themoviedb.org/3/discover/movie?      api_key=0f9d53792bd5deaacc609c8e93ec4148&&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genres.join(',')}`)
+  https://api.themoviedb.org/3/discover/movie?api_key=0f9d53792bd5deaacc609c8e93ec4148&&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genres.join(
+    ","
+  )}`);
+  console.log("movies res", moviesResponse.data.results);
+  const myTenMovies = moviesResponse.data.results.slice(10);
 
-  const myTenMovies = moviesResponse.results.slice(10);
-
-  myTenMovies.map(m => {
-    await GameMovie.create({ gameId: gameToUpdate.id, movieId: m.id })
-  })
+  myTenMovies.map((movie) => {
+    GameMovie.create({ gameId: gameToUpdate.id, movieId: movie.id });
+  });
 
   console.log("req body", req.body);
 
