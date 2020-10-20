@@ -9,6 +9,7 @@ const User = require("./models").user;
 const Choice = require("./models").choice;
 const Participant = require("./models").participant;
 const bodyParser = require("body-parser");
+const gameRouter = require("./routers/games");
 
 const router = express.Router();
 var io = require("socket.io")(http);
@@ -76,7 +77,8 @@ app.post("/set_up_game", async (req, res, next) => {
 
   try {
     const { started } = req.body;
-    // console.log(req.body);
+    const { name } = req.body;
+    console.log(req.body);
     const code = Math.floor(Math.random() * 10000);
 
     const newGame = await Game.create({
@@ -84,6 +86,19 @@ app.post("/set_up_game", async (req, res, next) => {
       started: started,
     });
     console.log("new game", newGame);
+
+    const newUser = await User.create({
+      name: name,
+    });
+
+    console.log("user", newUser);
+
+    const newParticipant = await Participant.create({
+      gameId: newGame.id,
+      userId: newUser.id,
+    });
+    console.log("particpant", newParticipant);
+
     res.status(200).send(newGame);
   } catch (e) {
     next(e);
@@ -93,11 +108,13 @@ app.post("/set_up_game", async (req, res, next) => {
 app.post("/movies_in_game", async (req, res, next) => {
   const { id } = req.body.movie;
   const { gameId } = req.body;
-  const { title } = req.body;
+  const { title } = req.body.movie;
   console.log("req body", req.body.movie);
   console.log("title", title);
   try {
     const overview = "overview";
+    const picked = true;
+    const userId = 2;
 
     const newGameMovie = await GameMovie.create({
       gameId: gameId,
@@ -106,14 +123,20 @@ app.post("/movies_in_game", async (req, res, next) => {
       title: title,
     });
 
+    const newChoice = await Choice.create({
+      gameMovieId: newGameMovie.id,
+      userId: 3,
+      picked: picked,
+    });
+
+    console.log("new choice", newChoice);
+
     // console.log("new game movie", newGameMovie);
     res.status(200).send(newGameMovie);
   } catch (e) {
     next(e);
   }
 });
-
-// Ask rian about title and separate migration
 
 app.post("/participant", async (req, res, next) => {
   try {
@@ -147,7 +170,7 @@ app.post("/choice", async (req, res, next) => {
   }
 });
 
-//ask rian about user and changing on this step
+//ask about user and changing on this step
 app.post("/user", async (req, res, next) => {
   try {
     const name = "ololo";
@@ -164,6 +187,8 @@ app.post("/user", async (req, res, next) => {
     next(e);
   }
 });
+
+app.use("/game", gameRouter);
 
 app.listen(port, () => console.log("listening on port " + port));
 http.listen(3000, () => {

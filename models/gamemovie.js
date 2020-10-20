@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       gameId: DataTypes.INTEGER,
       movieId: DataTypes.INTEGER,
       overview: DataTypes.STRING,
+      title: DataTypes.STRING,
     },
     {
       sequelize,
