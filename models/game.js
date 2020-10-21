@@ -15,12 +15,14 @@ module.exports = (sequelize, DataTypes) => {
         through: "participants",
         foreignKey: "gameId",
       });
+      game.belongsTo(models.choice);
     }
   }
   game.init(
     {
       code: DataTypes.INTEGER,
       started: DataTypes.BOOLEAN,
+      finished: DataTypes.BOOLEAN,
       genres: DataTypes.ARRAY(DataTypes.STRING),
     },
     {

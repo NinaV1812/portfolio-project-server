@@ -153,23 +153,6 @@ app.post("/participant", async (req, res, next) => {
   }
 });
 
-app.post("/choice", async (req, res, next) => {
-  try {
-    const gameMovieId = 5;
-    const userId = 3;
-    const picked = true;
-
-    const newChoice = await Choice.create({
-      gameMovieId: gameMovieId,
-      userId: userId,
-      picked: picked,
-    });
-    res.status(200).send(newChoice);
-  } catch (e) {
-    next(e);
-  }
-});
-
 //ask about user and changing on this step
 app.post("/user", async (req, res, next) => {
   try {

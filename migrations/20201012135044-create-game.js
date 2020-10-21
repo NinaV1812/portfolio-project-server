@@ -14,6 +14,9 @@ module.exports = {
       started: {
         type: Sequelize.BOOLEAN,
       },
+      finished: {
+        type: Sequelize.BOOLEAN,
+      },
       genres: {
         type: Sequelize.ARRAY(Sequelize.STRING),
       },

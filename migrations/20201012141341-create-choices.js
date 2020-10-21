@@ -1,46 +1,55 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('choices', {
+    await queryInterface.createTable("choices", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       gameMovieId: {
         type: Sequelize.INTEGER,
         references: {
           model: "gameMovies",
-          key: "id"
+          key: "id",
         },
         onUpdate: "CASCADE",
-        onDelete: "CASCADE"
+        onDelete: "CASCADE",
       },
 
       userId: {
         type: Sequelize.INTEGER,
-      references: {
-        model: "users",
-        key: "id"
+        references: {
+          model: "users",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
-    },
+      gameId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "games",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       picked: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('choices');
-  }
+    await queryInterface.dropTable("choices");
+  },
 };
