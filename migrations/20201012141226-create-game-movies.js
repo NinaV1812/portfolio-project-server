@@ -21,11 +21,18 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       overview: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       title: {
         type: Sequelize.STRING,
       },
+      release_date: {
+        type: Sequelize.DATEONLY,
+      },
+      vote_average: {
+        type: Sequelize.FLOAT,
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

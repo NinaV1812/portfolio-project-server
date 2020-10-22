@@ -59,17 +59,26 @@ router.patch("/:id", async (req, res, next) => {
   https://api.themoviedb.org/3/discover/movie?api_key=0f9d53792bd5deaacc609c8e93ec4148&&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genres.join(
     ","
   )}`);
-  console.log("movies res", moviesResponse.data.results);
+  // console.log("movies res", moviesResponse.data.results);
   const myTenMovies = moviesResponse.data.results.slice(10);
 
-  // console.log("my ten movies", myTenMovies);
+  console.log("my ten movies", myTenMovies);
+
+  // const overview = "overview";
 
   // const yourTenMovies = await Promise.all(
   myTenMovies.map((movie) => {
-    return GameMovie.create({ gameId: gameToUpdate.id, movieId: movie.id });
+    return GameMovie.create({
+      gameId: gameToUpdate.id,
+      movieId: movie.id,
+      overview: movie.overview,
+      title: movie.title,
+      release_date: movie.release_date,
+      vote_average: movie.vote_average,
+    });
   });
 
-  console.log("your ten movies", myTenMovies);
+  // console.log("your ten movies", myTenMovies);
   return res.status(200).send(myTenMovies);
 });
 
