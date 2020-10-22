@@ -10,6 +10,7 @@ const Choice = require("./models").choice;
 const Participant = require("./models").participant;
 const bodyParser = require("body-parser");
 const gameRouter = require("./routers/games");
+const gameMovieRouter = require("./routers/game-movies");
 
 const router = express.Router();
 var io = require("socket.io")(http);
@@ -174,6 +175,7 @@ app.post("/user", async (req, res, next) => {
 });
 
 app.use("/game", gameRouter);
+app.use("/game_movie", gameMovieRouter);
 
 app.listen(port, () => console.log("listening on port " + port));
 http.listen(3000, () => {
