@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         through: "partcipants",
         foreignKey: "userId",
       });
+      user.belongsToMany(models.gameMovie, {
+        through: "choice",
+        foreignKey: "userId",
+      });
     }
   }
   user.init(

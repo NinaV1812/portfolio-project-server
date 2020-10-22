@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       gameMovie.belongsTo(models.game);
       gameMovie.hasMany(models.choice);
+      gameMovie.hasMany(models.user);
     }
   }
   gameMovie.init(
@@ -21,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       release_date: DataTypes.DATEONLY,
       vote_average: DataTypes.FLOAT,
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,
