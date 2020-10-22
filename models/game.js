@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         through: "participants",
         foreignKey: "gameId",
       });
-      game.belongsTo(models.choice);
     }
   }
   game.init(

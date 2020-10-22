@@ -36,6 +36,19 @@ router.post("/:code", async (req, res, next) => {
   res.status(200).send(game);
 });
 
+router.get("/:code", async (req, res, next) => {
+  const code = req.params.code;
+  //   const code = 8276;
+  // const { name } = req.body;
+
+  const game = await Game.findOne({
+    where: { code: code },
+    include: [GameMovie],
+  });
+  console.log("game", game);
+  res.status(200).send(game);
+});
+
 router.patch("/:id", async (req, res, next) => {
   const gameToUpdate = await Game.findByPk(req.params.id);
   const { genres } = req.body;
@@ -46,7 +59,7 @@ router.patch("/:id", async (req, res, next) => {
   https://api.themoviedb.org/3/discover/movie?api_key=0f9d53792bd5deaacc609c8e93ec4148&&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genres.join(
     ","
   )}`);
-  // console.log("movies res", moviesResponse.data.results);
+  console.log("movies res", moviesResponse.data.results);
   const myTenMovies = moviesResponse.data.results.slice(10);
 
   // console.log("my ten movies", myTenMovies);
@@ -62,7 +75,7 @@ router.patch("/:id", async (req, res, next) => {
 
 router.post("/choice", async (req, res, next) => {
   try {
-    const gameMovieId = 5;
+    // const gameMovieId = 5;
     const userId = 3;
     const picked = true;
 

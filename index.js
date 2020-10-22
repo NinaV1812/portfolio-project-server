@@ -114,7 +114,6 @@ app.post("/movies_in_game", async (req, res, next) => {
   try {
     const overview = "overview";
     const picked = true;
-    const userId = 2;
 
     const newGameMovie = await GameMovie.create({
       gameId: gameId,
@@ -126,6 +125,7 @@ app.post("/movies_in_game", async (req, res, next) => {
     const newChoice = await Choice.create({
       gameMovieId: newGameMovie.id,
       userId: 3,
+      gameId: gameId,
       picked: picked,
     });
 
@@ -140,8 +140,10 @@ app.post("/movies_in_game", async (req, res, next) => {
 
 app.post("/participant", async (req, res, next) => {
   try {
-    const gameId = 5;
-    const userId = 3;
+    // const gameId = 5;
+    // const userId = 3;
+    const { gameId, userId } = req.body;
+    console.log("req body", req.body);
 
     const newParticipant = await Participant.create({
       gameId: gameId,

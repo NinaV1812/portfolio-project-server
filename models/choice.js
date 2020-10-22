@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       choice.belongsTo(models.gameMovie);
       choice.belongsTo(models.user);
-      choice.hasOne(models.game);
+      choice.belongsTo(models.game);
     }
   }
   choice.init(
