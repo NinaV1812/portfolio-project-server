@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       code: DataTypes.INTEGER,
       started: DataTypes.BOOLEAN,
+      finished: DataTypes.BOOLEAN,
       genres: DataTypes.ARRAY(DataTypes.STRING),
     },
     {

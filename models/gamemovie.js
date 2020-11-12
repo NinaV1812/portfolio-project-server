@@ -11,14 +11,21 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       gameMovie.belongsTo(models.game);
       gameMovie.hasMany(models.choice);
+      gameMovie.belongsToMany(models.user, {
+        through: "choice",
+        foreignKey: "gameMovieId",
+      });
     }
   }
   gameMovie.init(
     {
       gameId: DataTypes.INTEGER,
       movieId: DataTypes.INTEGER,
-      overview: DataTypes.STRING,
+      overview: DataTypes.TEXT,
       title: DataTypes.STRING,
+      release_date: DataTypes.DATEONLY,
+      vote_average: DataTypes.FLOAT,
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,

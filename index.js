@@ -10,6 +10,7 @@ const Choice = require("./models").choice;
 const Participant = require("./models").participant;
 const bodyParser = require("body-parser");
 const gameRouter = require("./routers/games");
+const gameMovieRouter = require("./routers/game-movies");
 
 const router = express.Router();
 var io = require("socket.io")(http);
@@ -73,8 +74,6 @@ app.get("/game_movies", async (req, res, next) => {
 });
 
 app.post("/set_up_game", async (req, res, next) => {
-  // get from body genresIds and year
-
   try {
     const { started } = req.body;
     const { name } = req.body;
@@ -110,12 +109,8 @@ app.post("/movies_in_game", async (req, res, next) => {
   const { gameId } = req.body;
   const { title } = req.body.movie;
   console.log("req body", req.body.movie);
-  console.log("title", title);
+  const { overview } = req.body.movie;
   try {
-    const overview = "overview";
-    const picked = true;
-    const userId = 2;
-
     const newGameMovie = await GameMovie.create({
       gameId: gameId,
       movieId: id,
@@ -126,69 +121,20 @@ app.post("/movies_in_game", async (req, res, next) => {
     const newChoice = await Choice.create({
       gameMovieId: newGameMovie.id,
       userId: 3,
+      gameId: gameId,
       picked: picked,
     });
 
     console.log("new choice", newChoice);
 
-    // console.log("new game movie", newGameMovie);
-    res.status(200).send(newGameMovie);
-  } catch (e) {
-    next(e);
-  }
-});
-
-app.post("/participant", async (req, res, next) => {
-  try {
-    const gameId = 5;
-    const userId = 3;
-
-    const newParticipant = await Participant.create({
-      gameId: gameId,
-      userId: userId,
-    });
-    res.status(200).send(newParticipant);
-  } catch (e) {
-    next(e);
-  }
-});
-
-app.post("/choice", async (req, res, next) => {
-  try {
-    const gameMovieId = 5;
-    const userId = 3;
-    const picked = true;
-
-    const newChoice = await Choice.create({
-      gameMovieId: gameMovieId,
-      userId: userId,
-      picked: picked,
-    });
     res.status(200).send(newChoice);
   } catch (e) {
     next(e);
   }
 });
 
-//ask about user and changing on this step
-app.post("/user", async (req, res, next) => {
-  try {
-    const name = "ololo";
-    const email = "ololo.com";
-    const password = 999;
-
-    const newUser = await User.create({
-      name: name,
-      email: email,
-      password: password,
-    });
-    res.status(200).send(newUser);
-  } catch (e) {
-    next(e);
-  }
-});
-
 app.use("/game", gameRouter);
+app.use("/game_movie", gameMovieRouter);
 
 app.listen(port, () => console.log("listening on port " + port));
 http.listen(3000, () => {
